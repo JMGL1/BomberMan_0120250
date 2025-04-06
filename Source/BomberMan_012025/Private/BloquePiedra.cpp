@@ -21,3 +21,4 @@ void ABloquePiedra::BeginPlay()
 	Super::BeginPlay();
 	// Aquí puedes agregar cualquier lógica adicional que necesites al inicio del juego
 }
+
