@@ -79,14 +79,14 @@ ABloquePiedra::~ABloquePiedra() {}
 // End Class ABloquePiedra
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_BomberMan_012025_Source_BomberMan_012025_Public_BloquePiedra_h_Statics
+struct Z_CompiledInDeferFile_FID_Users_X13_Documents_Unreal_Projects_BomberMan_012025_Source_BomberMan_012025_Public_BloquePiedra_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ABloquePiedra, ABloquePiedra::StaticClass, TEXT("ABloquePiedra"), &Z_Registration_Info_UClass_ABloquePiedra, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABloquePiedra), 1405086489U) },
+		{ Z_Construct_UClass_ABloquePiedra, ABloquePiedra::StaticClass, TEXT("ABloquePiedra"), &Z_Registration_Info_UClass_ABloquePiedra, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABloquePiedra), 1088217564U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BomberMan_012025_Source_BomberMan_012025_Public_BloquePiedra_h_2462970670(TEXT("/Script/BomberMan_012025"),
-	Z_CompiledInDeferFile_FID_BomberMan_012025_Source_BomberMan_012025_Public_BloquePiedra_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BomberMan_012025_Source_BomberMan_012025_Public_BloquePiedra_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_X13_Documents_Unreal_Projects_BomberMan_012025_Source_BomberMan_012025_Public_BloquePiedra_h_3379950504(TEXT("/Script/BomberMan_012025"),
+	Z_CompiledInDeferFile_FID_Users_X13_Documents_Unreal_Projects_BomberMan_012025_Source_BomberMan_012025_Public_BloquePiedra_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_X13_Documents_Unreal_Projects_BomberMan_012025_Source_BomberMan_012025_Public_BloquePiedra_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration

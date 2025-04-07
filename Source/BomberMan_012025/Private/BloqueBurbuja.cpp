@@ -5,6 +5,7 @@
 
 ABloqueBurbuja::ABloqueBurbuja()
 {
+	PosicionInicial = FVector::ZeroVector; // Inicializar PosicionInicial
 	if (MallaBloque)
 	{
 		static ConstructorHelpers::FObjectFinder<UMaterial> MaterialBase(TEXT("/Script/Engine.Material'/Game/StarterContent/Materials/Burbuja.Burbuja'"));
@@ -13,12 +14,13 @@ ABloqueBurbuja::ABloqueBurbuja()
 			MallaBloque->SetMaterial(0, MaterialBase.Object); // Asignar el material al slot 0
 		}
 	}
-
+	bPuedeMoverse = FMath::RandBool(); // Desactivar el movimiento
 }
 void ABloqueBurbuja::BeginPlay()
 {
 	Super::BeginPlay();
 	// Aquí puedes agregar cualquier lógica adicional que necesites al inicio del juego
+	PosicionInicial = GetActorLocation(); // Asignar la posición inicial al comenzar el juego
 }
 void ABloqueBurbuja::Tick(float DeltaTime)
 {
@@ -27,9 +29,13 @@ void ABloqueBurbuja::Tick(float DeltaTime)
 	// Por ejemplo, puedes mover el bloque o aplicar efectos visuales
 	if (bPuedeMoverse)
 	{
-		FVector NuevaPosicion = GetActorLocation();
-		float DeltaHeight = FMath::FRandRange(-2.0f, 2.0f) * FloatSpeed * DeltaTime; // Multiplicado por DeltaTime para movimiento suave
-		NuevaPosicion.Z = FMath::Clamp(NuevaPosicion.Z + DeltaHeight, MinZ, MaxZ); // Limitar el rango Z
-		SetActorLocation(NuevaPosicion);
+		float NuevaAltura = PosicionInicial.Z + FMath::Sin(GetWorld()->GetTimeSeconds() * 2.0f) * 50.0f;
+		SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, NuevaAltura));
 	}
+
 }
+
+
+
+
+//.h

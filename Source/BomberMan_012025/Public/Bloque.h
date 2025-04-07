@@ -32,3 +32,5 @@ public:
 	float RotationSpeed;
 	bool bPuedeMoverse;
 };
+
+

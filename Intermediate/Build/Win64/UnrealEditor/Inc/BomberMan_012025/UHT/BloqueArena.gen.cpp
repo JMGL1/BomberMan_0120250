@@ -79,14 +79,14 @@ ABloqueArena::~ABloqueArena() {}
 // End Class ABloqueArena
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_BomberMan_012025_Source_BomberMan_012025_Public_BloqueArena_h_Statics
+struct Z_CompiledInDeferFile_FID_Users_X13_Documents_Unreal_Projects_BomberMan_012025_Source_BomberMan_012025_Public_BloqueArena_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ABloqueArena, ABloqueArena::StaticClass, TEXT("ABloqueArena"), &Z_Registration_Info_UClass_ABloqueArena, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABloqueArena), 1640210089U) },
+		{ Z_Construct_UClass_ABloqueArena, ABloqueArena::StaticClass, TEXT("ABloqueArena"), &Z_Registration_Info_UClass_ABloqueArena, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABloqueArena), 2015745050U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_BomberMan_012025_Source_BomberMan_012025_Public_BloqueArena_h_4185717629(TEXT("/Script/BomberMan_012025"),
-	Z_CompiledInDeferFile_FID_BomberMan_012025_Source_BomberMan_012025_Public_BloqueArena_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_BomberMan_012025_Source_BomberMan_012025_Public_BloqueArena_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_X13_Documents_Unreal_Projects_BomberMan_012025_Source_BomberMan_012025_Public_BloqueArena_h_3735857202(TEXT("/Script/BomberMan_012025"),
+	Z_CompiledInDeferFile_FID_Users_X13_Documents_Unreal_Projects_BomberMan_012025_Source_BomberMan_012025_Public_BloqueArena_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_X13_Documents_Unreal_Projects_BomberMan_012025_Source_BomberMan_012025_Public_BloqueArena_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration
