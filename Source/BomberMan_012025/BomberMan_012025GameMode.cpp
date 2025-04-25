@@ -74,67 +74,114 @@ void ABomberMan_012025GameMode::BeginPlay()
 
 void ABomberMan_012025GameMode::PosicionarJugadorAleatoriamente()
 {
-	TArray<FIntPoint> PosicionesCercaDelBorde;
+	// 1) Leer dimensiones del mapa
+	int NumFilas = aMapaBloques.Num();
+	int NumColumnas = aMapaBloques[0].Num();
 
-	// Buscar bloques de madera (valor 6) cerca del borde
-	int32 NumFilas = aMapaBloques.Num();
-	int32 NumColumnas = aMapaBloques[0].Num();
-
-	for (int32 fila = 1; fila < NumFilas - 1; ++fila)
+	// 2) Recopilar candidatos: madera (6) cerca del borde (≤1)
+	TArray<FIntPoint> Candidatos;
+	for (int fila = 1; fila < NumFilas - 1; ++fila)
 	{
-		for (int32 columna = 1; columna < NumColumnas - 1; ++columna)
+		for (int columna = 1; columna < NumColumnas - 1; ++columna)
 		{
-			// Si es un bloque de madera
 			if (aMapaBloques[fila][columna] == 6)
 			{
 				// Calcular distancia mínima al borde
-				int32 DistanciaSuperior = fila;
-				int32 DistanciaInferior = NumFilas - 1 - fila;
-				int32 DistanciaIzquierda = columna;
-				int32 DistanciaDerecha = NumColumnas - 1 - columna;
+				int DistanciaSuperior = fila;
+				int DistanciaInferior = NumFilas - 1 - fila;
+				int DistanciaIzquierda = columna;
+				int DistanciaDerecha = NumColumnas - 1 - columna;
 
-				int32 DistanciaMinima = FMath::Min3(
+				int DistanciaMinima = FMath::Min3(
 					FMath::Min(DistanciaSuperior, DistanciaInferior),
 					DistanciaIzquierda,
 					DistanciaDerecha
 				);
 
-				// Si la distancia mínima es baja (por ejemplo <= 3 bloques), consideramos que está cerca del borde
-				if (DistanciaMinima <= 3)
+				if (DistanciaMinima <= 1)
 				{
-					PosicionesCercaDelBorde.Add(FIntPoint(fila, columna));
+					Candidatos.Add(FIntPoint(fila, columna));
 				}
 			}
 		}
 	}
 
-	// Verificar que hay posiciones válidas
-	if (PosicionesCercaDelBorde.Num() > 0)
+	// 3) Si no hay candidatos, avisar y salir
+	if (Candidatos.Num() == 0)
 	{
-		// Elegir una posición aleatoria entre las válidas
-		int32 index = FMath::RandRange(0, PosicionesCercaDelBorde.Num() - 1);
-		FIntPoint posicionElegida = PosicionesCercaDelBorde[index];
+		GEngine->AddOnScreenDebugMessage(
+			-1, 3.f, FColor::Red,
+			TEXT("No hay bloques de madera cerca del borde"));
+		return;
+	}
 
-		// Convertir a coordenadas del mundo
-		FVector nuevaPosicion = FVector(
-			XInicial + posicionElegida.Y * AnchoBloque,
-			YInicial + posicionElegida.X * LargoBloque,
-			350.0f // Altura del jugador
-		);
+	// 4) Contar vecinos ocupados (≠0) de cada candidato
+	static const FIntPoint Direcciones[4] = {
+		FIntPoint(-1,  0), // arriba
+		FIntPoint(1,  0), // abajo
+		FIntPoint(0, -1), // izquierda
+		FIntPoint(0,  1)  // derecha
+	};
 
-		// Mover al personaje
-		ACharacter* Jugador = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-		if (Jugador)
+	int MaxVecinosOcupados = -1;
+	TArray<FIntPoint> Mejores;
+	Mejores.Reserve(Candidatos.Num());
+
+	for (int i = 0; i < Candidatos.Num(); ++i)
+	{
+		const FIntPoint& cel = Candidatos[i];
+		int fila = cel.X;
+		int columna = cel.Y;
+		int cuenta = 0;
+
+		// Comprobar manualmente los 4 vecinos
+		for (int d = 0; d < 4; ++d)
 		{
-			Jugador->SetActorLocation(nuevaPosicion);
-			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("Jugador posicionado cerca del borde sobre bloque de madera"));
+			FIntPoint offset = Direcciones[d];
+			int f = fila + offset.X;
+			int c = columna + offset.Y;
+			if (aMapaBloques[f][c] != 0)
+			{
+				++cuenta;
+			}
+		}
+
+		if (cuenta > MaxVecinosOcupados)
+		{
+			MaxVecinosOcupados = cuenta;
+			Mejores.Empty();
+			Mejores.Add(cel);
+		}
+		else if (cuenta == MaxVecinosOcupados)
+		{
+			Mejores.Add(cel);
 		}
 	}
-	else
+
+	// 5) Elegir uno aleatorio de los Mejores
+	int idx = FMath::RandRange(0, Mejores.Num() - 1);
+	FIntPoint elegido = Mejores[idx];
+
+	// 6) Convertir a coordenadas mundo (centro del bloque)
+	FVector NuevaPos = FVector(
+		XInicial + elegido.Y * AnchoBloque + AnchoBloque * 0.5f,
+		YInicial + elegido.X * LargoBloque + LargoBloque * 0.5f,
+		350.0f
+	);
+
+	// 7) Mover al jugador
+	if (ACharacter* Jugador = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, TEXT("No se encontraron bloques de madera cerca del borde"));
+		Jugador->SetActorLocation(NuevaPos);
+		GEngine->AddOnScreenDebugMessage(
+			-1, 3.f, FColor::Green,
+			TEXT("Jugador posicionado sobre el bloque óptimo"));
 	}
 }
+
+
+
+
 
 void ABomberMan_012025GameMode::ReemplazarTodosLosBloquesInteriores()
 {

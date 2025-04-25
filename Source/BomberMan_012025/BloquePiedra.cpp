@@ -66,7 +66,7 @@ void ABloquePiedra::ElegirNuevaDireccion()
 {
     int Direccion = FMath::RandRange(0, 3);
     FVector Offset(0.0f);
-    const float DistanciaMovimiento = 200.0f;
+    const float DistanciaMovimiento = 100.0f;
 
     switch (Direccion)
     {
